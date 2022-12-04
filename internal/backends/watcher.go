@@ -10,6 +10,16 @@ import (
 	"github.com/hashicorp/consul/api/watch"
 )
 
+
+type watcher struct {
+	sync.RWMutex   // 基于读写锁实现并发控制
+	*watch.Plan
+	lastValues    map[string][]byte
+	hybridHandler watch.HybridHandlerFunc   // 当对应的key发生变化时，调用对应的处理函数
+	stopChan      chan struct{}
+	err           chan error
+}
+
 //初始化对应的watcher ，这里设置的是监听路径的类型，也可以支持service、node等，通过更改type
 //支持的type类型有
 //key - Watch a specific KV pair
@@ -44,14 +54,7 @@ func newServiceWatcher(serviceName string) (*watcher, error) {
 	}, nil
 }
 
-type watcher struct {
-	sync.RWMutex
-	*watch.Plan
-	lastValues    map[string][]byte
-	hybridHandler watch.HybridHandlerFunc
-	stopChan      chan struct{}
-	err           chan error
-}
+
 
 //获取value
 func (w *watcher) getValue(path string) []byte {

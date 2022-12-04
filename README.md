@@ -1,6 +1,5 @@
 # consul-tool
-用于获取consul中键/值以及实现consul Watch机制监听的工具库
-
+用于获取consul中键/值以及实现consul Watch机制监听的工具库，关于watch机制的实现以及样例可查看 [基于consul实现watch机制](https://blog.longpi1.com/2022/12/04/%E5%9F%BA%E4%BA%8Econsul%E5%AE%9E%E7%8E%B0watch%E6%9C%BA%E5%88%B6/)
 ### 初始化配置
 ```golang
 conf := NewConfig()

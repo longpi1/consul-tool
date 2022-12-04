@@ -58,6 +58,7 @@ func (c *Config) getWatcher(path string) *watcher {
 	return c.watchers[c.absPath(path)]
 }
 
+// 添加watcher
 func (c *Config) addWatcher(path string, w *watcher) error {
 	c.Lock()
 	defer c.Unlock()
@@ -87,6 +88,7 @@ func (c *Config) cleanWatcher() {
 	}
 }
 
+// 获取所有的watcher
 func (c *Config) getAllWatchers() []*watcher {
 	c.RLock()
 	defer c.RUnlock()
